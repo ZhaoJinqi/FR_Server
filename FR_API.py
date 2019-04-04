@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # Use flask build a API for face detection with opencv
-# curl -m 30 -F "file=@demo.jpg;type=image/jpeg" http://192.168.50.192:5001/facedetectapi
+# curl -m 30 -F "file=@test1.jpg;type=image/jpeg" http://192.168.50.192:5001/facedetectapi
 
 from flask import Flask,request,redirect,url_for
 # import numpy as np
@@ -19,14 +19,14 @@ def facedetectapi():
     if request.method == 'POST':
         f = request.files['image']
         basepath = os.path.dirname(__file__)
-        upload_path = os.path.join(basepath, 'demo.jpg')
+        upload_path = os.path.join(basepath, 'postimg.jpg')
         f.save(upload_path)
 
         img = cv2.imread(upload_path)  # 读取从终端上传的图像
-        result_Dict = facedetect(img)  # 对读取到的图像进行人脸检测
+        result_dict = facedetect(img)  # 对读取到的图像进行人脸检测
         # print(result_Dict)
         # result_trans = [ str(x) for x in result_list ]
-        result_json = json.dumps(result_Dict)
+        result_json = json.dumps(result_dict)
         return result_json + '\n'
     return 'Error Format'
 
